@@ -58,6 +58,6 @@ wm = WeChatMessage(client)
 wea, temperature, low, high, humidity, wind, air  = get_weather()
 text, author = get_words2()
 
-data = {"weather":{"value":wea},"temperature":{"value":temperature,"color": "#FF0000" if temperature > 30 else "#00FF00"},"low":{"value":low,"color": "#FF0000" if low > 30 else "#00FF00"},"high":{"value":high,"color": "#FF0000" if high > 30 else "#00FF00"},"humidity":{"value":humidity},"wind":{"value":wind},"air":{"value":air,"color":"#00FF00" if air=="优" else "#FF9900" },"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words()+" ", "color":get_random_color()},"words2":{"value":text+' —— '+ author, "color":get_random_color2()}}
+data = {"weather":{"value":wea},"temperature":{"value":temperature,"color": "#FF0000" if temperature > 30 else "#00FF00"},"low":{"value":low,"color": "#FF0000" if low > 30 else "#00FF00"},"high":{"value":high,"color": "#FF0000" if high > 30 else "#00FF00"},"humidity":{"value":humidity},"wind":{"value":wind},"air":{"value":air,"color":"#00FF00" if air=="优" else "#FF9900" },"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words()+" ", "color":get_random_color()},"words2":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
