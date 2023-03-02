@@ -22,7 +22,7 @@ def get_weather_now():
   url = "https://devapi.qweather.com/v7/weather/now?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
   weather = res['now']
-  return weather['text'], int(weather['temp']), int(weather['feelsLike']), int(weather['windDir']),int(weather['windScale']),weather['humidity']+'%','优'
+  return weather['text'], int(weather['temp']), int(weather['feelsLike']), weather['windDir'],int(weather['windScale']),weather['humidity']+'%','优'
 
 def get_weather_today():
   url = "https://devapi.qweather.com/v7/weather/3d?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
