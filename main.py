@@ -19,10 +19,10 @@ template_id = os.environ["TEMPLATE_ID"]
 
 
 def get_weather():
-  url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
+  url = "https://devapi.qweather.com/v7/weather/3d?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
-  weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['temp']), math.floor(weather['low']), math.floor(weather['high']),weather['humidity'],weather['wind'],weather['airQuality']
+  weather = res['daily'][0]
+  return weather['textDay'], math.floor(30), math.floor(weather['tempMin']), math.floor(weather['tempMax']),weather['humidity'],weather['windDirDay'],'优'
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
