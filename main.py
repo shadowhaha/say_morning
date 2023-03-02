@@ -18,11 +18,17 @@ user_id = os.environ["USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
 
 
-def get_weather():
+def get_weather_now():
+  url = "https://devapi.qweather.com/v7/weather/now?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
+  res = requests.get(url).json()
+  weather = res['now']
+  return weather['text'], int(weather['temp']), int(weather['feelsLike']), int(weather['windDir']),int(weather['windScale']),weather['humidity']+'%','优'
+
+def get_weather_today():
   url = "https://devapi.qweather.com/v7/weather/3d?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
-  weather = res['daily'][0]
-  return weather['textDay'], math.floor(30), int(weather['tempMin']), int(weather['tempMax']),int(weather['humidity']),weather['windDirDay'],'优'
+  weather2 = res['daily'][0]
+  return weather2['textDay'], int(weather['temp']), int(weather['tempMin']), int(weather['tempMax']),int(weather['humidity']),weather['windDirDay'],'优'
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -55,9 +61,9 @@ def get_random_color2():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
-wea, temperature, low, high, humidity, wind, air  = get_weather()
+weatherText, temperature, low,wind ,high, humidity,air   = get_weather_now()
 text, author = get_words2()
 
-data = {"weather":{"value":wea},"temperature":{"value":temperature,"color": "#FF0000" if temperature >= 35 else "#FF9900" if 30<=temperature<35 else "#00FF00" if  15<=temperature<30 else "#00BFFF" if temperature<15 else "#0000CD"},"low":{"value":low,"color": "#FF0000" if low >= 35 else "#FF9900" if 30<=low<35 else "#00FF00" if  15<=low<30 else "#00BFFF" if low<15 else "#0000CD"},"high":{"value":high,"color": "#FF0000" if high >= 35 else "#FF9900" if 30<=high<35 else "#00FF00" if  15<=high<30 else "#00BFFF" if high<15 else "#0000CD"},"humidity":{"value":humidity},"wind":{"value":wind},"air":{"value":air,"color":"#00FF00" if air=="优" else "#FF9900" if air=="良" else "#FF0000" },"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words()+" ", "color":get_random_color()},"words2":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}}
+data = {"weather":{"value":weatherText},"temperature":{"value":temperature,"color": "#FF0000" if temperature >= 35 else "#FF9900" if 30<=temperature<35 else "#00FF00" if  15<=temperature<30 else "#00BFFF" if temperature<15 else "#0000CD"},"low":{"value":low,"color": "#FF0000" if low >= 35 else "#FF9900" if 30<=low<35 else "#00FF00" if  15<=low<30 else "#00BFFF" if low<15 else "#0000CD"},"high":{"value":high,"color": "#FF0000" if high >= 35 else "#FF9900" if 30<=high<35 else "#00FF00" if  15<=high<30 else "#00BFFF" if high<15 else "#0000CD"},"humidity":{"value":humidity},"wind":{"value":wind},"air":{"value":air,"color":"#00FF00" if air=="优" else "#FF9900" if air=="良" else "#FF0000" },"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words()+" ", "color":get_random_color()},"words2":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
