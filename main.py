@@ -22,13 +22,34 @@ def get_weather_now():
   url = "https://devapi.qweather.com/v7/weather/now?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
   weather = res['now']
-  return weather['text'], int(weather['temp']), int(weather['feelsLike']), weather['windDir'],int(weather['windScale']),weather['humidity']+'%','优'
+  fxLink = res['fxLink']
+  return weather['text'], int(weather['temp']), int(weather['feelsLike']), weather['windDir'],weather['windScale']+'级',weather['humidity']+'%',fxLink
 
 def get_weather_today():
   url = "https://devapi.qweather.com/v7/weather/3d?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
-  weather2 = res['daily'][0]
-  return weather2['textDay'], int(weather['temp']), int(weather['tempMin']), int(weather['tempMax']),int(weather['humidity']),weather['windDirDay'],'优'
+  weather = res['daily'][0]
+  return weather['textDay'],weather['textNight'], int(weather['tempMax']),int(weather['tempMin']),weather['windDirDay']+weather['windScaleDay']+'级',weather['windDirNight']+weather['windScaleNight']+'级',weather['humidity']+'%',weather['precip'],int(weather['uvIndex'])
+
+def get_weather_indices():
+  url = "https://devapi.qweather.com/v7/indices/1d?type=0&location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
+  res = requests.get(url).json()
+  indices = res['daily']
+  return indices[0]['name']+':'+indices[0]['category'],indices[0]['text'],
+indices[2]['name']+':'+indices[2]['category'],indices[2]['text'],
+indices[12]['name']+':'+indices[12]['category'],indices[12]['text'],
+indices[6]['name']+':'+indices[6]['category'],indices[6]['text'],
+indices[8]['name']+':'+indices[8]['category'],indices[8]['text'],
+indices[7]['name']+':'+indices[7]['category'],indices[7]['text'],
+indices[15]['name']+':'+indices[15]['category'],indices[15]['text'],
+indices[5]['name']+':'+indices[5]['category'],indices[5]['text']
+
+def get_weather_air():
+  url = "https://devapi.qweather.com/v7/air/now?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
+  res = requests.get(url).json()
+  air = res['now']
+  return air['category'],int(air['aqi']), air['pm2p5']+' μg/m³'
+
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -61,9 +82,47 @@ def get_random_color2():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
-weatherText, temperature, low,wind ,high, humidity,air   = get_weather_now()
+weatherTextNow, temperature, feelsLike,wind ,windScale, humidity,link   = get_weather_now()
+weatherTextDay, weatherTextNight,tempMax,tempMin,windDay,windNight,humidityToday,precip,uvIndex = get_weather_today()
+yundong,yundongText,chuanyi,chuanyiText,huazhuang,huazhuangText,guomin,guominText,ganmao,ganmaoText,shushi,shushiText,fangshai,fangshaiText,lvyou,lvyouText = get_weather_indices()
+airText,aqi,pm25=get_weather_air()
+
 text, author = get_words2()
 
-data = {"weather":{"value":weatherText},"temperature":{"value":temperature,"color": "#FF0000" if temperature >= 35 else "#FF9900" if 30<=temperature<35 else "#00FF00" if  15<=temperature<30 else "#00BFFF" if temperature<15 else "#0000CD"},"low":{"value":low,"color": "#FF0000" if low >= 35 else "#FF9900" if 30<=low<35 else "#00FF00" if  15<=low<30 else "#00BFFF" if low<15 else "#0000CD"},"high":{"value":high,"color": "#FF0000" if high >= 35 else "#FF9900" if 30<=high<35 else "#00FF00" if  15<=high<30 else "#00BFFF" if high<15 else "#0000CD"},"humidity":{"value":humidity},"wind":{"value":wind},"air":{"value":air,"color":"#00FF00" if air=="优" else "#FF9900" if air=="良" else "#FF0000" },"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words()+" ", "color":get_random_color()},"words2":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}}
+data = {
+        "weatherTextNow":{"value":weatherTextNow},
+        "temperature":{"value":temperature,"color": "#FF0000" if temperature >= 35 else "#FF9900" if 30<=temperature<35 else "#00FF00" if  15<=temperature<30 else "#00BFFF" if temperature<15 else "#0000CD"},
+        "feelsLike":{"value":feelsLike,"color": "#FF0000" if feelsLike >= 35 else "#FF9900" if 30<=feelsLike<35 else "#00FF00" if  15<=feelsLike<30 else "#00BFFF" if feelsLike<15 else "#0000CD"},
+        "wind":{"value":wind},
+        "windScale":{"value":windScale},
+        "humidity":{"value":humidity},
+        "link":{"value":link},
+        "weatherTextDay":{"value":weatherTextDay},
+        "weatherTextNight":{"value":weatherTextNight},
+        "tempMin":{"value":tempMin,"color": "#FF0000" if tempMin >= 35 else "#FF9900" if 30<=tempMin<35 else "#00FF00" if  15<=tempMin<30 else "#00BFFF" if tempMin<15 else "#0000CD"},
+        "tempMax":{"value":tempMax,"color": "#FF0000" if tempMax >= 35 else "#FF9900" if 30<=tempMax<35 else "#00FF00" if  15<=tempMax<30 else "#00BFFF" if tempMax<15 else "#0000CD"},
+        "windDay":{"value":windDay},
+        "windNight":{"value":windNight},
+        "humidityToday":{"value":humidityToday},
+        "precip":{"value":precip},
+        "uvIndex":{"value":uvIndex<=2?'一级':uvIndex<=4?'二级':uvIndex<=6?'三级':uvIndex<=9?'四级':'五级',"color":"#00FF00" if uvIndex<=2 else "#FFFF00" if 2<uvIndex<=4 else "#FF9900" if 4<uvIndex<=6 else "#FF0000" if 6<uvIndex<=9 else "#9900CC" },
+        "air":{"value":airText,"color":"#00FF00" if airText=="优" else "#FF9900" if airText=="良" else "#FF0000" },
+        "aqi":{"value":aqi},
+        "pm25":{"value":pm25},
+        "yundong":{"value":yundong},"yundongText":{"value":yundongText},
+        "chuanyi":{"value":chuanyi},"chuanyiText":{"value":chuanyiText},
+        "huazhuang":{"value":huazhuang},"huazhuangText":{"value":huazhuangText},
+        "guomin":{"value":guomin},"guominText":{"value":guominText},
+        "ganmao":{"value":ganmao},"ganmaoText":{"value":ganmaoText},
+        "shushi":{"value":shushi},"shushiText":{"value":shushiText},
+        "fangshai":{"value":fangshai},"fangshaiText":{"value":fangshaiText},
+        "lvyou":{"value":lvyou},"lvyouText":{"value":lvyouText},
+  
+  
+        "love_days":{"value":get_count()},
+        "birthday_left":{"value":get_birthday()},
+        "words":{"value":get_words()+" ", "color":get_random_color()},
+        "words2":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
+       }
 res = wm.send_template(user_id, template_id, data)
 print(res)
