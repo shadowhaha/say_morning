@@ -22,7 +22,7 @@ def get_weather():
   url = "https://devapi.qweather.com/v7/weather/3d?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
   weather = res['daily'][0]
-  return weather['textDay'], math.floor(30), weather['tempMin'], weather['tempMax'],weather['humidity'],weather['windDirDay'],'优'
+  return weather['textDay'], math.floor(30), float(weather['tempMin']), float(weather['tempMax']),float(weather['humidity']),weather['windDirDay'],'优'
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
