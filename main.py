@@ -29,7 +29,7 @@ def get_weather_today():
   url = "https://devapi.qweather.com/v7/weather/3d?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
   weather = res['daily'][0]
-  return weather['textDay'],weather['textNight'], int(weather['tempMax']),int(weather['tempMin']),weather['windDirDay']+weather['windScaleDay']+'级',weather['windDirNight']+weather['windScaleNight']+'级',weather['humidity']+'%',weather['precip'],int(weather['uvIndex'])
+  return weather['textDay'],weather['textNight'], int(weather['tempMax']),int(weather['tempMin']),weather['windDirDay']+weather['windScaleDay']+'级',weather['windDirNight']+weather['windScaleNight']+'级',weather['humidity']+'%',weather['precip']+'mm',int(weather['uvIndex'])
 
 def get_weather_indices():
   url = "https://devapi.qweather.com/v7/indices/1d?type=0&location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
