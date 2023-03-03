@@ -105,7 +105,7 @@ data = {
         "windNight":{"value":windNight},
         "humidityToday":{"value":humidityToday},
         "precip":{"value":precip},
-        "uvIndex":{"value":uvIndex<=2?'一级':uvIndex<=4?'二级':uvIndex<=6?'三级':uvIndex<=9?'四级':'五级',"color":"#00FF00" if uvIndex<=2 else "#FFFF00" if 2<uvIndex<=4 else "#FF9900" if 4<uvIndex<=6 else "#FF0000" if 6<uvIndex<=9 else "#9900CC" },
+        "uvIndex":{"value":uvIndex,"color":"#00FF00" if uvIndex<=2 else "#FFFF00" if 2<uvIndex<=4 else "#FF9900" if 4<uvIndex<=6 else "#FF0000" if 6<uvIndex<=9 else "#9900CC" },
         "air":{"value":airText,"color":"#00FF00" if airText=="优" else "#FF9900" if airText=="良" else "#FF0000" },
         "aqi":{"value":aqi},
         "pm25":{"value":pm25},
