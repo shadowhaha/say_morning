@@ -102,20 +102,20 @@ data = {
         "q":{"value":airText,"color":"#00FF00" if airText=="优" else "#FF9900" if airText=="良" else "#FF0000" },
         "r":{"value":aqi},
         "s":{"value":pm25},
-        "yundong":{"value":yundong},"yundongText":{"value":yundongText},
-        "chuanyi":{"value":chuanyi},"chuanyiText":{"value":chuanyiText},
-        "huazhuang":{"value":huazhuang},"huazhuangText":{"value":huazhuangText},
-        "guomin":{"value":guomin},"guominText":{"value":guominText},
-        "ganmao":{"value":ganmao},"ganmaoText":{"value":ganmaoText},
-        "shushi":{"value":shushi},"shushiText":{"value":shushiText},
-        "fangshai":{"value":fangshai},"fangshaiText":{"value":fangshaiText},
-        "lvyou":{"value":lvyou},"lvyouText":{"value":lvyouText},
+        "t":{"value":yundong},"tt":{"value":yundongText},
+        "u":{"value":chuanyi},"uu":{"value":chuanyiText},
+        "v":{"value":huazhuang},"vv":{"value":huazhuangText},
+        "w":{"value":guomin},"ww":{"value":guominText},
+        "x":{"value":ganmao},"xx":{"value":ganmaoText},
+        "y":{"value":shushi},"yy":{"value":shushiText},
+        "z":{"value":fangshai},"zz":{"value":fangshaiText},
+        "1":{"value":lvyou},"11":{"value":lvyouText},
   
   
-        "love_days":{"value":get_count()},
-        "birthday_left":{"value":get_birthday()},
-        "words":{"value":get_words()+" ", "color":get_random_color()},
-        "words2":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
+        "2":{"value":get_count()},
+        "3":{"value":get_birthday()},
+        "4":{"value":get_words()+" ", "color":get_random_color()},
+        "5":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
        }
 res = wm.send_template(user_id, template_id, data)
 print(res)
