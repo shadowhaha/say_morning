@@ -35,7 +35,7 @@ def get_weather_indices():
   url = "https://devapi.qweather.com/v7/indices/1d?type=0&location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
   res = requests.get(url).json()
   indices = res['daily']
-  return indices[0]['name']+':'+indices[0]['category'],indices[0]['text'],indices[2]['name']+':'+indices[2]['category'],indices[2]['text'],indices[12]['name']+':'+indices[12]['category'],indices[12]['text'],indices[6]['name']+':'+indices[6]['category'],indices[6]['text'],ndices[8]['name']+':'+indices[8]['category'],indices[8]['text'],indices[7]['name']+':'+indices[7]['category'],indices[7]['text'],indices[15]['name']+':'+indices[15]['category'],indices[15]['text'],indices[5]['name']+':'+indices[5]['category'],indices[5]['text']
+  return indices[0]['name']+':'+indices[0]['category'],indices[0]['text'],indices[2]['name']+':'+indices[2]['category'],indices[2]['text'],indices[12]['name']+':'+indices[12]['category'],indices[12]['text'],indices[6]['name']+':'+indices[6]['category'],indices[6]['text'],indices[8]['name']+':'+indices[8]['category'],indices[8]['text'],indices[7]['name']+':'+indices[7]['category'],indices[7]['text'],indices[15]['name']+':'+indices[15]['category'],indices[15]['text'],indices[5]['name']+':'+indices[5]['category'],indices[5]['text']
 
 def get_weather_air():
   url = "https://devapi.qweather.com/v7/air/now?location=101030100&key=afc9647291ad4e3e993aa97899b177d7"
