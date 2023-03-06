@@ -61,7 +61,7 @@ def get_words():
   return words.json()['data']['text']
 
 def get_words2():
-  words2 = requests.get("https://saying.api.azwcl.com/saying/get")
+  words2 = requests.get("https://saying.api.azwcl.com/saying/get", verify=False)
   if words2.status_code != 200:
     return get_words2()
   return words2.json()['data']['content'],words2.json()['data']['author']
