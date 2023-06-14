@@ -80,7 +80,7 @@ weatherTextDay, weatherTextNight,tempMax,tempMin,windDay,windNight,humidityToday
 yundong,yundongText,chuanyi,chuanyiText,huazhuang,huazhuangText,guomin,guominText,ganmao,ganmaoText,shushi,shushiText,fangshai,fangshaiText,lvyou,lvyouText = get_weather_indices()
 airText,aqi,pm25=get_weather_air()
 
-text, author = get_words2()
+#text, author = get_words2()
 
 data = {
         "a":{"value":weatherTextNow},
