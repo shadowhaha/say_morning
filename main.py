@@ -60,12 +60,12 @@ def get_words():
     return get_words()
   return words.json()['data']['text']
 
-def get_words2():
-  words2 = requests.get("https://saying.api.azwcl.com/saying/get")
-  print('打印---------------'+words2)
+#def get_words2():
+#  words2 = requests.get("https://saying.api.azwcl.com/saying/get", verify=False)
+#  print('打印---------------'+words2)
 #  if words2.json()['code'] != 200:
 #    return get_words2()
-  return words2.json()['data']['content'],words2.json()['data']['author']
+#  return words2.json()['data']['content'],words2.json()['data']['author']
 
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
@@ -78,10 +78,10 @@ client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
 weatherTextNow, temperature, feelsLike,wind ,windScale, humidity,link   = get_weather_now()
 weatherTextDay, weatherTextNight,tempMax,tempMin,windDay,windNight,humidityToday,precip,uvIndex = get_weather_today()
-yundong,yundongText,chuanyi,chuanyiText,huazhuang,huazhuangText,guomin,guominText,ganmao,ganmaoText,shushi,shushiText,fangshai,fangshaiText,lvyou,lvyouText = get_weather_indices()
+yun#dong,yundongText,chuanyi,chuanyiText,huazhuang,huazhuangText,guomin,guominText,ganmao,ganmaoText,shushi,shushiText,fangshai,fangshaiText,lvyou,lvyouText = get_weather_indices()
 airText,aqi,pm25=get_weather_air()
 
-text, author = get_words2()
+#text, author = get_words2()
 
 data = {
         "a":{"value":weatherTextNow},
@@ -116,7 +116,7 @@ data = {
         "2":{"value":get_count()},
         "3":{"value":get_birthday()},
         "4":{"value":get_words()+" ", "color":get_random_color()},
-        "5":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
+     #   "5":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
        }
 res = wm.send_template(user_id, template_id, data)
 print(res)
