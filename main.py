@@ -60,11 +60,11 @@ def get_words():
     return get_words()
   return words.json()['data']['text']
 
-def get_words2():
-  words2 = requests.get("https://saying.api.azwcl.com/saying/get", verify=False)
-  if words2.status_code != 200:
-    return get_words2()
-  return words2.json()['data']['content'],words2.json()['data']['author']
+#def get_words2():
+ # words2 = requests.get("https://saying.api.azwcl.com/saying/get", verify=False)
+ # if words2.status_code != 200:
+ #   return get_words2()
+ # return words2.json()['data']['content'],words2.json()['data']['author']
 
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
@@ -115,7 +115,7 @@ data = {
         "2":{"value":get_count()},
         "3":{"value":get_birthday()},
         "4":{"value":get_words()+" ", "color":get_random_color()},
-        "5":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
+    #    "5":{"value":text+' —— '+ author+"  ", "color":get_random_color2()}
        }
 res = wm.send_template(user_id, template_id, data)
 print(res)
