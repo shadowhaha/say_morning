@@ -78,7 +78,7 @@ client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
 weatherTextNow, temperature, feelsLike,wind ,windScale, humidity,link   = get_weather_now()
 weatherTextDay, weatherTextNight,tempMax,tempMin,windDay,windNight,humidityToday,precip,uvIndex = get_weather_today()
-yun#dong,yundongText,chuanyi,chuanyiText,huazhuang,huazhuangText,guomin,guominText,ganmao,ganmaoText,shushi,shushiText,fangshai,fangshaiText,lvyou,lvyouText = get_weather_indices()
+yundong,yundongText,chuanyi,chuanyiText,huazhuang,huazhuangText,guomin,guominText,ganmao,ganmaoText,shushi,shushiText,fangshai,fangshaiText,lvyou,lvyouText = get_weather_indices()
 airText,aqi,pm25=get_weather_air()
 
 #text, author = get_words2()
